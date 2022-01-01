@@ -10,9 +10,6 @@
   },
   "author": "Maximilian",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.1"
-  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
