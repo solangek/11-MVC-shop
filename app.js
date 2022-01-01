@@ -20,5 +20,5 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
-
-app.listen(80);
+let port = process.env.PORT || 8080;
+app.listen(port);
