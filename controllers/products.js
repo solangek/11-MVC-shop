@@ -31,7 +31,15 @@ exports.postAddProduct = (req, res, next) => {
   try {
     const product = new Product(req.body.title, req.body.price, newId);
     product.save();
-    res.redirect('/');
+    // what is the difference between (1) and (2)?
+    //res.redirect('/'); // (1)
+    let prods = Product.fetchAll();   // (2)
+    res.render('shop', {
+      prods: prods,
+      pageTitle: 'My Shop',
+      path: '/',
+      hasProducts: prods.length > 0
+    });
   } catch (err) {
     // TO DO! we must handle the error here and generate a EJS page to display the error.
   }
