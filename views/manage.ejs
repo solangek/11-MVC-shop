@@ -1,0 +1,35 @@
+<%- include('includes/head.ejs') %>
+</head>
+<body>
+<%- include('includes/navigation.ejs') %>
+<div class="container mt-5">
+    <h1>Manage Books</h1>
+    <% if (prods.length > 0) { %>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% prods.forEach(function(product) { %>
+                    <tr>
+                        <td><%= product.title %></td>
+                        <td>$<%= product.price %></td>
+                        <td>
+                            <form action="/admin/delete-product/<%= product.id %>" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <div class="alert alert-info mt-4">No books to manage.</div>
+    <% } %>
+</div>
+<%- include('includes/end.ejs') %>
+

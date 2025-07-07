@@ -1,44 +1,34 @@
 <%- include('includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
     <script src="js/main.js"></script>
 </head>
-
 <body>
     <%- include('includes/navigation.ejs') %>
-    <p>Current shopping cart bill: <span id="sum">0</span></p>
-
-    <main>
-
-        <% if (hasProducts) { %>
-
-            <div class="grid">
-
-                <% for (const product of prods) { %>
-
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
-                            <img src="/assets/book.jpg" alt="A Book">
+    <div class="container mt-4">
+        <div class="alert alert-info">Current shopping cart bill: <span id="sum">0</span></div>
+        <main>
+            <% if (hasProducts) { %>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <% for (const product of prods) { %>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="/assets/book.jpg" class="card-img-top" alt="A Book" style="width: 100px; height: 100px; object-fit: cover; margin: 0 auto;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.title %></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Price: $<%= product.price %></h6>
+                                    <p class="card-text">A very interesting book about so many even more interesting things!</p>
+                                </div>
+                                <div class="card-footer text-end">
+                                    <button class="btn btn-success" data-id="<%= product.id %>">Add to Cart</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card__content">
-                            <h2 class="product__price">Price: $<%= product.price %></h2>
-                            <p class="product__description">A very interesting book about so many even more interesting things!</p>
-                        </div>
-                        <div class="card__actions">
-                            <button class="btn" data-id="<%= product.id %>">Add to Cart</button>
-                        </div>
-                    </article>
-
-                <% } %>
-
-            </div>
-
-        <% } else { %>
-
-            <h1>No Products Found !</h1>
-
-        <% } %>
-    </main>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-warning mt-4" role="alert">
+                    No Products Found!
+                </div>
+            <% } %>
+        </main>
+    </div>
 <%- include('includes/end.ejs') %>

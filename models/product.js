@@ -1,44 +1,62 @@
+// models/product.js
 
-/** A MODULE to manage the Product model.
- * in future examples, we will use a database to store data.
-*/
+/** In-memory product list */
+let productList = [];
 
+/** A MODULE to manage the Product model. */
 module.exports = class Product {
+  /**
+   * @param {string} t - Product title
+   * @param {number} p - Product price
+   * @param {string|number} id - Product ID
+   */
   constructor(t, p, id) {
     this.title = t;
     this.price = p;
     this.id = id;
   }
 
-  /** Save the product to a file.
-   * @throws {Error} if the product already exists or if the product has no title.
-   * */
-
+  /**
+   * Save the product to the in-memory list.
+   * @throws {Error} if the product already exists or has missing fields.
+   */
   save() {
     if (!this.title || !this.price || !this.id) {
       throw new Error('Product must have a title, price and id');
     }
-    if (productList.includes(this.title)) {
-        throw new Error('Product already exists');
+    if (productList.some(prod => prod.id === this.id || prod.title === this.title)) {
+      throw new Error(`Product with ID ${this.id} or title "${this.title}" already exists`);
     }
     productList.push(this);
   }
 
-  /** Fetch all products from the file.
-   * @returns {Array} an array of products.
+  /**
+   * Fetch all products.
+   * @returns {Array<Product>}
    */
   static fetchAll() {
-    return (productList);
+    return [...productList];
   }
 
+  /**
+   * Get the number of products.
+   * @returns {number}
+   */
   static getLength() {
     return productList.length;
   }
+
+  /**
+   * Delete a product by ID.
+   * @param {string|number} id
+   * @returns {boolean}
+   */
+  static deleteById(id) {
+    const index = productList.findIndex(p => p.id === id);
+    if (index !== -1) {
+      productList.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
 };
-
-/*
- this example stores the model in memory. Ideally these should be stored
- persistently in a database.
- */
-let productList = [];
-

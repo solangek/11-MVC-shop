@@ -41,7 +41,8 @@ exports.postAddProduct = (req, res, next) => {
       hasProducts: prods.length > 0
     });
   } catch (err) {
-    // TO DO! we must handle the error here and generate a EJS page to display the error.
+    res.status(500).render('error', { message: err.message || 'An error occurred.',
+    pageTitle: 'Error', path: '/' });
   }
 
 };
@@ -63,7 +64,35 @@ exports.getProducts = (req, res, next) => {
 
 };
 
+/**
+ * displays the manage page with all products
+ */
+exports.getManage = (req, res, next) => {
+  let prods = Product.fetchAll();
+  res.render('manage', {
+    prods: prods,
+    pageTitle: 'Manage Books',
+    path: '/admin/manage'
+  });
+};
+
 const generateId = () => {
   // get the length of the array and add 1 to it.
     return Product.getLength() + 1;
 }
+
+// delete a product by id
+exports.deleteProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  const Product = require('../models/product');
+  Product.deleteById(productId);
+  res.redirect('/');
+};
+
+// update a product by id
+exports.updateProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  // TO DO! implement the update logic here.
+  // for now, we will just redirect to the home page.
+  res.redirect('/');
+};
