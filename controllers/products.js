@@ -12,7 +12,7 @@ const Product = require('../models/product');
  * @param res
  * @param next
  */
-exports.getAddProduct = (req, res, next) => {
+exports.showProductForm = (req, res, next) => {
   res.render('add-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
@@ -26,7 +26,7 @@ exports.getAddProduct = (req, res, next) => {
  * @param res
  * @param next
  */
-exports.postAddProduct = (req, res, next) => {
+exports.addProduct = (req, res, next) => {
   let newId = generateId();
   try {
     const product = new Product(req.body.title, req.body.price, newId);
@@ -67,8 +67,9 @@ exports.getProducts = (req, res, next) => {
 /**
  * displays the manage page with all products
  */
-exports.getManage = (req, res, next) => {
+exports.manageProducts = (req, res, next) => {
   let prods = Product.fetchAll();
+  console.log("Managing products:", prods);
   res.render('manage', {
     prods: prods,
     pageTitle: 'Manage Books',
@@ -83,10 +84,26 @@ const generateId = () => {
 
 // delete a product by id
 exports.deleteProduct = (req, res, next) => {
-  const productId = req.params.productId;
-  const Product = require('../models/product');
-  Product.deleteById(productId);
-  res.redirect('/');
+    // normalize id to a number and validate
+    const rawId = req.body.pid;
+    if (!rawId) {
+        console.log('No pid in request body:', req.body);
+        return res.redirect('/');
+    }
+
+    const productId = parseInt(rawId, 10);
+
+    const deleted = Product.deleteById(productId);
+    if (deleted) {
+        console.log(`Product with ID ${productId} deleted successfully.`);
+    } else {
+        console.log(`Product with ID ${productId} not found. deleteById returned:`, deleted);
+    }
+
+    const after = Product.fetchAll();
+    console.log('After delete:', after);
+
+    res.redirect('/');
 };
 
 // update a product by id

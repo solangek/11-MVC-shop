@@ -6,15 +6,14 @@ const productsController = require('../controllers/products');
 const router = express.Router();
 
 // /admin/add-product => GET
-router.get('/add-product', productsController.getAddProduct);
+router.get('/add-product', productsController.showProductForm);
 
 // /admin/add-product => POST
-router.post('/add-product', productsController.postAddProduct);
+router.post('/add-product', productsController.addProduct);
 
 // /admin/manage => GET
-router.get('/manage', productsController.getManage);
+router.get('/manage', productsController.manageProducts);
 
-// /admin/delete-product/:productId => POST
-router.post('/delete-product/:productId', productsController.deleteProduct);
+router.post('/delete-product', productsController.deleteProduct);
 
 module.exports = router;

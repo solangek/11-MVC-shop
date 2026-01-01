@@ -19,7 +19,8 @@
                         <td><%= product.title %></td>
                         <td>$<%= product.price %></td>
                         <td>
-                            <form action="/admin/delete-product/<%= product.id %>" method="POST" style="display:inline;">
+                            <form action="/admin/delete-product" method="POST" style="display:inline;">
+                                <input type="hidden" name="pid" value="<%= product.id %>">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>

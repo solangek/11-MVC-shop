@@ -52,7 +52,7 @@ module.exports = class Product {
    * @returns {boolean}
    */
   static deleteById(id) {
-    const index = productList.findIndex(p => p.id === id);
+    const index = productList.findIndex(prod => prod.id === id);
     if (index !== -1) {
       productList.splice(index, 1);
       return true;
