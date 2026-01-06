@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // get all buttons
-  var buttons = document.querySelectorAll('button');
+  const buttons = document.querySelectorAll('button');
 
   // attach clickAddEventListener to all buttons
   buttons.forEach(function(button) {
